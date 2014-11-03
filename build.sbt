@@ -11,12 +11,16 @@ scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.4"/*, "2.11.0"*/)
 
+resolvers ++= Seq(
+  "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
+)
+
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.5",
   "net.liftweb" %% "lift-json" % "3.0-M1",
   "com.github.nscala-time" %% "nscala-time" % "0.2.0",
   "io.shaka" %% "naive-http" % "51",
-  "im.mange" %% "shoreditch-engine" % "58",
+  "im.mange" %% "shoreditch-api" % "0.0.58",
   "org.scalatest" % "scalatest_2.10" % "2.1.4" % "test"
 )
 
