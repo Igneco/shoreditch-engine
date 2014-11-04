@@ -25,7 +25,7 @@ case class TestRunReport(testId: Long, testRunId: Long, started: Option[DateTime
 
 //next up TestSuite and TestSuiteRun ....
 
-case class TestRunReportListener(test: Test) extends ScriptEventListener {
+case class TestRunReportListener(test: Test, outputDirectory: String = "registry/testruns") extends ScriptEventListener {
   private var services: List[VersionedService] = Nil
 
   override def success(check: Check) { writeReport(check.script, Nil) }
@@ -60,7 +60,7 @@ case class TestRunReportListener(test: Test) extends ScriptEventListener {
 
     //TODO: we should delegate to the TestRunRegistry for this ...
 //    Files.write(Paths.get("registry/testruns/" + script.testRunId.get + ".json"), pretty(render(jsonAst)).getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE)
-    Filepath("registry/testruns/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
+    Filepath(outputDirectory + "/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
   }
 
   override def validated(testRunId: Long, versionedServices: List[VersionedService]) {

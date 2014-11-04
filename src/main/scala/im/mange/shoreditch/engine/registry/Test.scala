@@ -1,7 +1,7 @@
 package im.mange.shoreditch.engine.registry
 
-//TODO: a test should have a name, possibly the first line or some sort of tag?
-case class Test(id: Long, rawLines: Seq[String]) {
-  val name = rawLines.head
-  val content = rawLines.drop(1)
+case class Test(rawLines: Seq[String], id: Long = TestIdCounter.next) {
+  private val lines = rawLines.filterNot(l => l.trim.isEmpty || l.trim.startsWith("-")).toList
+  val name = lines.head
+  val content = lines.drop(1)
 }

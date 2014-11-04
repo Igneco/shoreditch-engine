@@ -18,7 +18,7 @@ object TestsRegistry {
 
   def load = {
     if (!directory.exists) createTest(TestIdCounter.next, exampleTemplate)
-    directory.files.map(f => Test(f.name.split("\\.").head.replace("TR", "").toLong, f.lines().filterNot(l => l.trim.isEmpty || l.trim.startsWith("-")).toList)).toList
+    directory.files.map(f => Test(f.lines().toList, f.name.split("\\.").head.replace("TR", "").toLong)).toList
   }
 
   private def createTest(id: Long, content: String) {
