@@ -85,6 +85,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   def successful = isCompleted && !isAborted && hasStarted
 
   def validate() = {
+    val debug = false
     val requiredSystemAliases = steps.map(_.requiredSystem).distinct.sorted
 //    println("### requiredSystemAliases: " + requiredSystemAliases)
 
@@ -129,13 +130,13 @@ case class Script(engineEventListener: ScriptEventListener, private val services
       //which systems can run my step
       //(1) do we have all the required systems
       val availableSystems = services.systems.filter(_.alias == s.requiredSystem)
-      println("> step " + s.id + " needs " + s.requiredSystem + " we found candidate " + availableSystems.map(_.env))
+      if (debug) println("> step " + s.id + " needs " + s.requiredSystem + " we found candidate " + availableSystems.map(_.env))
 
       //(2) which of the systems available can run this step
       availableSystems.map(as => {
-        println(s"does ${as.alias} ${as.env} support " + s.me + " - ")
-        println(services.discovered)
-        println(services.raw)
+        if (debug) println(s"does ${as.alias} ${as.env} support " + s.me + " - ")
+        if (debug) println(services.discovered)
+        if (debug) println(services.raw)
       })
     })
 

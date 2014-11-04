@@ -6,6 +6,7 @@ import im.mange.shoreditch.engine.{Json, HttpClient}
 
 //TODO: should be a refresh or discover method or something ...
 case class Services(systems: Seq[System]) {
+  val debug = false
   private val supportedServiceTypes = List("action", "check")
 
   var raw = Seq[Service]()
@@ -17,7 +18,7 @@ case class Services(systems: Seq[System]) {
   raw = systems.map(system => {
     try {
       val metaData = Json.deserialiseMetaDataResponse(HttpClient.unsafeGet(system.url + "/metadata"))
-      println("### " + system.alias + " " + metaData.version + " - actions: " + metaData.actions.size + ", checks: " + metaData.checks.size)
+      if (debug) println("### " + system.alias + " " + metaData.version + " - actions: " + metaData.actions.size + ", checks: " + metaData.checks.size)
 
       metaData.actions.map(service => {
         val fixedUpServices = service.url.split("/").dropWhile(!supportedServiceTypes.contains(_))
@@ -40,5 +41,5 @@ case class Services(systems: Seq[System]) {
     }
   }).flatten
 
-  println("\n### All discovered: \n" + discovered.toString().split(", ").mkString("\n"))
+  if (debug) println("\n### All discovered: \n" + discovered.toString().split(", ").mkString("\n"))
 }
