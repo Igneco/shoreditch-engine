@@ -9,6 +9,7 @@ import im.mange.shoreditch.hipster.VersionedService
 import im.mange.shoreditch.hipster.Action
 import im.mange.shoreditch.hipster.Check
 import im.mange.shoreditch.engine.registry.Test
+import scala.reflect.io.Directory
 
 //TODO: allow rendering as text/html
 
@@ -59,7 +60,8 @@ case class TestRunReportListener(test: Test, outputDirectory: String = "registry
     ))
 
     //TODO: we should delegate to the TestRunRegistry for this ...
-//    Files.write(Paths.get("registry/testruns/" + script.testRunId.get + ".json"), pretty(render(jsonAst)).getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE)
+    val directory = Directory(outputDirectory)
+    if (!directory.exists) directory.createDirectory(force = true)
     Filepath(outputDirectory + "/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
   }
 
