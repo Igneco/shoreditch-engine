@@ -8,6 +8,7 @@ import im.mange.shoreditch.hipster.Check
 import im.mange.shoreditch.hipster.Action
 
 case class CompositeListener(listeners: List[ScriptEventListener]) extends ScriptEventListener {
+  override def beforeStarted(script: Script) { listeners.foreach(_.beforeStarted(script)) }
   def validated(testRunId: Long, versionedServices: List[VersionedService]) { listeners.foreach(_.validated(testRunId, versionedServices)) }
   def started(when: LocalDateTime, script: Script) { listeners.foreach(_.started(when, script)) }
   def stopped(when: LocalDateTime, script: Script) { listeners.foreach(_.stopped(when, script)) }

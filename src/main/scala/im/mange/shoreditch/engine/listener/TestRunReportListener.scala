@@ -29,6 +29,7 @@ case class TestRunReport(testId: Long, testRunId: Long, started: Option[DateTime
 case class TestRunReportListener(test: Test, outputDirectory: String = "registry/testruns") extends ScriptEventListener {
   private var services: List[VersionedService] = Nil
 
+  override def beforeStarted(script: Script) {}
   override def success(check: Check) { writeReport(check.script, Nil) }
   override def failure(check: Check, reasons: List[String]) { writeReport(check.script, reasons) }
   override def success(action: Action) { writeReport(action.script, Nil) }
@@ -62,7 +63,7 @@ case class TestRunReportListener(test: Test, outputDirectory: String = "registry
     //TODO: we should delegate to the TestRunRegistry for this ...
     val directory = Directory(outputDirectory)
     if (!directory.exists) directory.createDirectory(force = true)
-    Filepath(outputDirectory + "/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
+    Filepath(outputDirectory + "/TR" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
   }
 
   override def validated(testRunId: Long, versionedServices: List[VersionedService]) {

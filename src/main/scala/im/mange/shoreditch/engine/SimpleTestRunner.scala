@@ -18,7 +18,7 @@ case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None)
 
     val script = Script.parse(
       CompositeListener(listeners),
-      services, test.content
+      services, test.content, test.name
     )(clock)
 
     script.beforeRun()

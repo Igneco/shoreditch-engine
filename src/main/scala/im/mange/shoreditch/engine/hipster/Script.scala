@@ -27,8 +27,8 @@ import im.mange.shoreditch.engine.registry.TestRunIdCounter
 //TODO: should testRunId be a case class of the test id and the run id ...
 //TODO: we need an if (debug)
 object Script {
-  def parse(engineEventListener: ScriptEventListener, services: Services, lines: Seq[String])(implicit clock: Clock) = {
-    val script = hipster.Script(engineEventListener, services)
+  def parse(engineEventListener: ScriptEventListener, services: Services, lines: Seq[String], name: String)(implicit clock: Clock) = {
+    val script = hipster.Script(engineEventListener, services, Nil, name)
     val stepFactory = StepFactory()
     val steps = lines.map(l => {
       val step = stepFactory.create(l)
@@ -43,12 +43,12 @@ object Script {
 case class AvailableServices(system: System, services: Seq[Service])
 case class AvailableSystems(alias: String, systems: Seq[System])
 //TODO: this is not a good name anymore
-case class VersionedService(alias: String, offering: Option[ServiceOffering])
+case class VersionedService(alias: String, env: Option[String], offering: Option[ServiceOffering])
 case class ServiceOffering(env: String, version: String, validated: Boolean)
 
 //TODO: surely some of these vars can be private at least
 //TODO: store the testRunId = TestRunIdCounter.next
-case class Script(engineEventListener: ScriptEventListener, private val services: Services, var steps: Seq[Step] = Nil)(implicit clock: Clock) {
+case class Script(engineEventListener: ScriptEventListener, private val services: Services, var steps: Seq[Step] = Nil, name: String)(implicit clock: Clock) {
   //TODO: provide methods for getting/checking vars/aborting, so we can hide these again
   var context = Map[String, String]()
   private var aborted: Option[String] = None
@@ -118,7 +118,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
 //        case None => VersionedService(as.system, s.system.env, s.metaData.version, false)
 //      }
       //TODO: clearly more work required here for multiple system implementations
-      VersionedService(as.system.alias, Some(ServiceOffering(as.system.env, as.services.headOption.fold("Not Available")(_.metaData.version), !as.services.isEmpty)))
+      VersionedService(as.system.alias, Some(as.system.env), Some(ServiceOffering(as.system.env, as.services.headOption.fold("Not Available")(_.metaData.version), !as.services.isEmpty)))
     ).toList
 
     //TODO: we must also validate every single action and check ...
@@ -141,15 +141,15 @@ case class Script(engineEventListener: ScriptEventListener, private val services
     })
 
     val missingSystemAliases = requiredSystemAliases.toSet.diff(requiredVersionedServices.map(_.alias).toSet).toList
-    val missingVersionServices = missingSystemAliases.map(a => VersionedService(a, None))
+    val missingVersionServices = missingSystemAliases.map(a => VersionedService(a, None, None))
     val allVersionedServices = requiredVersionedServices ++ missingVersionServices
     engineEventListener.validated(testRunId.get, allVersionedServices)
     allVersionedServices.filterNot(_.offering.fold(false)(_.validated)).isEmpty
-
   }
 
   def beforeRun() {
-    testRunId = Some(TestRunIdCounter.next)    
+    testRunId = Some(TestRunIdCounter.next)
+    engineEventListener.beforeStarted(this)
   }
   
   //TODO: blow up if trying to start a previously run script

@@ -13,19 +13,20 @@ import im.mange.shoreditch.engine.Filepath
 //TODO: should probably be one directory per test id
 //TODO: factor out common stuff with SystemsRegistry
 //TODO: should be sorted by something, id or description maybe
-object TestsRegistry {
-  private val directory = Directory("registry/tests")
+case class TestsRegistry(filepath: String) {
+  private val directory = Directory(filepath)
 
   def load = {
     if (!directory.exists) createTest(TestIdCounter.next, exampleTemplate)
-    directory.files.map(f => Test(f.lines().toList, f.name.split("\\.").head.replace("TR", "").toLong)).toList
+    directory.files.map(f => Test(f.lines().toList, f.name.split("\\.").head.replace("T", "").toLong)).toList
   }
 
   private def createTest(id: Long, content: String) {
     directory.createDirectory(force = true)
-    Filepath("registry/tests/TR" + id + ".hip").write(content)
+    Filepath(filepath + "/T" + id + ".hip").write(content)
   }
 
+  //TODO: probably should not be here anymore
   private val exampleTemplate =
     """Bookings must be reserved and paid for
       |@pnr <= create reservation in:booking => from:LHR to:JFK
