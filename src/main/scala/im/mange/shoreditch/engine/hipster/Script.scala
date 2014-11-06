@@ -55,7 +55,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   private var started: Option[LocalDateTime] = None
   private var stopped: Option[LocalDateTime] = None
   //TODO: this is all a bit nasty ... it's like the script has a different mode ... RunningScript or something
-  var testRunId: Option[Long] = None
+  var testRunId: Option[String] = None
 
   def hasStarted = started.isDefined
   def isCompleted = isAborted || incompleteSteps.isEmpty

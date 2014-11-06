@@ -19,14 +19,14 @@ case class ServiceSummary(alias: String, env: Option[String], version: Option[St
 //TODO: I should hold failures
 case class StepSummary(description: String, completed: Option[DateTime])
 case class ScriptSummary(description: String, steps: Seq[StepSummary])
-case class TestRunReport(testId: Long, testRunId: Long, started: Option[DateTime], completed: Option[DateTime],
+case class TestRunReport(testId: String, testRunId: String, started: Option[DateTime], completed: Option[DateTime],
                         services: List[ServiceSummary], script: ScriptSummary, failures: List[String])
 //TODO: add who ran it
 //TODO: host these in a service so we can be fetched by test run id
 
 //next up TestSuite and TestSuiteRun ....
 
-case class TestRunReportListener(test: Test, outputDirectory: String = "registry/testruns") extends ScriptEventListener {
+case class TestRunReportListener(test: Test, outputDirectory: String) extends ScriptEventListener {
   private var services: List[VersionedService] = Nil
 
   override def beforeStarted(script: Script) {}
@@ -63,10 +63,10 @@ case class TestRunReportListener(test: Test, outputDirectory: String = "registry
     //TODO: we should delegate to the TestRunRegistry for this ...
     val directory = Directory(outputDirectory)
     if (!directory.exists) directory.createDirectory(force = true)
-    Filepath(outputDirectory + "/TR" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
+    Filepath(outputDirectory + "/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
   }
 
-  override def validated(testRunId: Long, versionedServices: List[VersionedService]) {
+  override def validated(testRunId: String, versionedServices: List[VersionedService]) {
     services = versionedServices
   }
 }

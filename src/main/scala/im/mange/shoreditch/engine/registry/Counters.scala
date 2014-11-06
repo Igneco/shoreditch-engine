@@ -1,6 +1,6 @@
 package im.mange.shoreditch.engine.registry
 
-//TODO: some or all of these shouldnt be in registry ...
+//TODO: these should  all be in registry ...
 object SystemIdCounter {
   private var count = 0L
 
@@ -15,17 +15,18 @@ object TestIdCounter {
 
   def next = synchronized {
     count += 1
-    count
+    s"T$count"
   }
 }
 
 object TestRunIdCounter {
-  private val initialValue = TestRunsRegistry.load.size
+  //TODO: bit iffy this
+  private val initialValue = TestRunsRegistry("registry/testruns").load.size
   private var count = initialValue
 
   def next = synchronized {
     count += 1
-    count
+    s"TR$count"
   }
 }
 

@@ -11,7 +11,7 @@ trait ScriptEventListener {
  // .. maybe some lightweight ScriptState thing
 
  def beforeStarted(script: Script): Unit
- def validated(testRunId: Long, versionedServices: List[VersionedService]): Unit
+ def validated(testRunId: String, versionedServices: List[VersionedService]): Unit
  def started(when: LocalDateTime, script: Script): Unit
  def stopped(when: LocalDateTime, script: Script): Unit
  def running(step: Step): Unit

@@ -13,10 +13,10 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
     println("\n### Running: " + script.name)
   }
 
-  def validated(testRunId: Long, versionedServices: List[VersionedService]) {
+  def validated(testRunId: String, versionedServices: List[VersionedService]) {
     //TODO: do we actually get here if we fail validation? - I think so
     //TODO: have a better message when no validated ...
-    println("### Validated against: " + versionedServices.map(v => v.alias + " " + v.offering.fold("Not Available")(_.version) + " (" + v.env.fold("Not Available")(_.toString) + ")").mkString(", ") )
+    println("### Validated with: " + versionedServices.map(v => v.alias + " " + v.offering.fold("Not Available")(_.version) + " (" + v.env.fold("Not Available")(_.toString) + ")").mkString(", ") )
   }
 
   def started(when: LocalDateTime, script: Script) {
@@ -27,7 +27,7 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
   def stopped(when: LocalDateTime, script: Script) {
     //TODO: format more nicely
     //TODO: yes and use the jodas duration gubbins
-    println("### Stopped at: " + when + ", duration: " + (script.duration) + " millis")
+    println("### Stopped at: " + when + ", duration: " + script.duration + " millis")
   }
 
   def running(step: Step) {}

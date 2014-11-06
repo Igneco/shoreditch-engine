@@ -2,11 +2,11 @@ package im.mange.shoreditch.engine.registry
 
 import scala.reflect.io.Directory
 
-object TestRunsRegistry {
-  private val directory = Directory("registry/testruns/")
+case class TestRunsRegistry(directory: String) {
+  private val dir = Directory(directory)
 
   def load = {
-    if (!directory.exists) directory.createDirectory()
-    directory.files.filter(_.extension == "json").toList
+    if (!dir.exists) dir.createDirectory()
+    dir.files.filter(_.extension == "json").toSeq
   }
 }

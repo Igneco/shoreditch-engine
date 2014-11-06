@@ -4,6 +4,7 @@ import org.joda.time.DateTime
 import im.mange.shoreditch.engine.Clock
 
 trait Step {
+  //TODO: should be S-prefixed
   val id: Long
   val description: String
   val requiredSystem: String

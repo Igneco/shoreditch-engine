@@ -7,9 +7,9 @@ import scala.io.Source
 import scala.reflect.io.Directory
 import im.mange.shoreditch.engine.systems.System
 
-//TODO: should probably be under "registry/systems/" (this would later support system sets/switching etc)
-object SystemsRegistry {
-  private val file = new File("registry/systems.txt")
+//TODO: should probably take a filepath to Sx.txt to later support system sets/switching etc
+case class SystemsRegistry(directory: String) {
+  private val file = new File(directory + "/systems.txt")
 
   def load = {
     if (!file.exists()) createSystems(exampleTemplate)
@@ -17,7 +17,7 @@ object SystemsRegistry {
   }
 
   private def createSystems(content: String) {
-    Directory("registry").createDirectory(force = true)
+    Directory(directory).createDirectory(force = true)
     val pw = new java.io.PrintWriter(file)
     try pw.write(content) finally pw.close()
   }
