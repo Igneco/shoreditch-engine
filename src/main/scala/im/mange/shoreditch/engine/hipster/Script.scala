@@ -54,6 +54,8 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   private var aborted: Option[String] = None
   private var started: Option[LocalDateTime] = None
   private var stopped: Option[LocalDateTime] = None
+  private var validatedServices: Option[List[VersionedService]] = None
+
   //TODO: this is all a bit nasty ... it's like the script has a different mode ... RunningScript or something
   var testRunId: Option[String] = None
 
@@ -64,6 +66,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   def startedAt = started
   def completedAt = stopped
   def abortedBecause = aborted
+  def versionedServices = validatedServices
 
   private def isAborted = aborted.isDefined
 
@@ -144,6 +147,8 @@ case class Script(engineEventListener: ScriptEventListener, private val services
     val missingVersionServices = missingSystemAliases.map(a => VersionedService(a, None, None))
     val allVersionedServices = requiredVersionedServices ++ missingVersionServices
     engineEventListener.validated(testRunId.get, allVersionedServices)
+    //TODO: this is simply shameful
+    validatedServices = Some(allVersionedServices)
     allVersionedServices.filterNot(_.offering.fold(false)(_.validated)).isEmpty
   }
 

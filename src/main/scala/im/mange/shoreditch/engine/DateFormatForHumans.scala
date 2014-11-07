@@ -1,9 +1,9 @@
 package im.mange.shoreditch.engine
 
-import org.joda.time.DateTimeZone._
 import org.joda.time.format.DateTimeFormat._
+import org.joda.time.DateTimeZone._
 import org.joda.time.format.PeriodFormatterBuilder
-import org.joda.time.{Interval, LocalDateTime, Period}
+import org.joda.time.{Period, Interval, LocalDateTime}
 
 object DateFormatForHumans {
   private val standardTimeFormat = forPattern("HH:mm:ss").withZone(UTC)

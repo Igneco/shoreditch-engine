@@ -4,12 +4,12 @@ import im.mange.shoreditch.engine.services.Services
 import akka.actor.{Props, ActorSystem}
 import im.mange.shoreditch.engine.listener.{CompositeListener, TestRunReportListener, LoggingListener}
 import im.mange.shoreditch.hipster.Script
-import im.mange.shoreditch.engine.model.{TestPack, Test}
+import im.mange.shoreditch.engine.model.{TestPackRunReport, TestRunReport, TestPack, Test}
 
 //TODO: a little try catch wouldnt go amiss
 //TODO: not to mention a little actor/actor system safety - share across tests etc
 case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None) {
-  def run(test: Test, services: Services): Option[String] = {
+  def run(test: Test, services: Services): TestRunReport = {
     //TODO: hide this, so that users see no akka, hear no akka
     val actorSystem = ActorSystem.create()
     val engine = actorSystem.actorOf(Props(new EngineActor))
@@ -29,11 +29,15 @@ case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None)
     //TODO: ultimately we don't want to this rubbish either
     actorSystem.shutdown()
 
-    script.abortedBecause.map("Test: " + test.id + " - " + test.name + " failed:\n" + _)
+//    script.abortedBecause.map("Test: " + test.id + " - " + test.name + " failed:\n" + _)
+    TestRunReport.create(test, script, script.versionedServices.getOrElse(Nil))
   }
 
-  def run(testPack: TestPack, services: Services): Option[String] = {
-    val failures: List[String] = testPack.tests.flatMap(run(_, services))
-    if (failures.isEmpty) None else Some("TestPack: " + testPack.id + " - " + testPack.name + " failed:\n" + failures.mkString("\n"))
+  def run(testPack: TestPack, services: Services, inParallel: Boolean = false): TestPackRunReport = {
+    val tests = testPack.tests
+    val toRun = if (inParallel) tests.par else tests
+    val reports = toRun.map(run(_, services)).toList
+//    if (failures.isEmpty) None else Some("TestPack: " + testPack.id + " - " + testPack.name + " failed:\n" + failures.mkString("\n"))
+    TestPackRunReport(testPack, reports)
   }
 }
