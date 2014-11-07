@@ -1,6 +1,6 @@
 package im.mange.shoreditch.engine.listener
 
-import org.joda.time.LocalDateTime
+import org.joda.time.{Interval, LocalDateTime}
 import im.mange.shoreditch.hipster._
 import im.mange.shoreditch.engine.{Clock, DateFormatForHumans, ScriptEventListener}
 import im.mange.shoreditch.hipster.VersionedService
@@ -40,5 +40,8 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
   def failure(check: Check, reasons: List[String]) { print(check, reasons.headOption) }
   def success(check: Check) { print(check, None) }
 
-  private def print(script: Step, context: Option[String]) { println(DateFormatForHumans.timeNow(clock) + " " + script.describe + context.fold("")(" - " + _)) }
+  private def print(step: Step, context: Option[String]) {
+    val took = if (step.isCompleted) Some(new Interval(step.startedAt.get, step.completedAt.get).toPeriod.getMillis + "ms") else None
+    println(DateFormatForHumans.timeNow(clock) + " " + step.describe + context.fold("")(" - " + _) + took.fold("")(" (" + _ + ")"))
+  }
 }

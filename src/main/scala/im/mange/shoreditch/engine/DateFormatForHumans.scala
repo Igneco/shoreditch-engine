@@ -1,9 +1,9 @@
 package im.mange.shoreditch.engine
 
-import org.joda.time.format.DateTimeFormat._
 import org.joda.time.DateTimeZone._
+import org.joda.time.format.DateTimeFormat._
 import org.joda.time.format.PeriodFormatterBuilder
-import org.joda.time.{Period, Interval, LocalDateTime}
+import org.joda.time.{Interval, LocalDateTime, Period}
 
 object DateFormatForHumans {
   private val standardTimeFormat = forPattern("HH:mm:ss").withZone(UTC)
@@ -25,6 +25,7 @@ object DateFormatForHumans {
     .toFormatter()
 
   def format(when: LocalDateTime)(implicit clock: Clock) = formatFor(when).print(when)
+  //TODO: terrible name
   def ago(when: LocalDateTime)(implicit clock: Clock) = periodFormat.print(new Interval(when.toDateTime, today.toDateTime).toPeriod)
   def ago(period: Period) = periodFormat.print(period)
   def timeNow(implicit clock: Clock) = standardTimeFormat.print(today)

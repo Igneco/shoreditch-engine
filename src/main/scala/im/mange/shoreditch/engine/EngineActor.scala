@@ -12,7 +12,10 @@ class EngineActor extends Actor {
   //TODO: probably not the best place for this
   TrustAllSslCertificates
 
-    def receive = {
+  //TODO: this really needs to be injected somehow ...
+  private val clock = RealClock
+
+  def receive = {
 //  protected def messageHandler: PartialFunction[Any, Unit] = {
     case s:Script => doScript(s)
     case a:Action => doAction(a)
@@ -40,6 +43,7 @@ class EngineActor extends Actor {
   private def doAction(action: Action) {
 //    println("doAction: " + action)
     try {
+      action.start()(clock)
       action.script.running(action)
       action.script.update(action, action.run)
     }
@@ -55,6 +59,7 @@ class EngineActor extends Actor {
   private def doCheck(check: Check) {
 //    println("doCheck: " + check)
     try {
+      check.start()(clock)
       check.script.running(check)
       check.script.update(check, check.run)
     }
