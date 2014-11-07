@@ -36,9 +36,9 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
     println("### Failed: " + action + " with: " + failures.head)
   }
 
-  def success(action: Action) { print(action) }
-  def failure(check: Check, reasons: List[String]) { print(check) }
-  def success(check: Check) { print(check) }
+  def success(action: Action) { print(action, None) }
+  def failure(check: Check, reasons: List[String]) { print(check, reasons.headOption) }
+  def success(check: Check) { print(check, None) }
 
-  private def print(script: Step) { println(script.describe + " @ " + DateFormatForHumans.timeNow(clock)) }
+  private def print(script: Step, context: Option[String]) { println(DateFormatForHumans.timeNow(clock) + " " + script.describe + context.fold("")(" - " + _)) }
 }
