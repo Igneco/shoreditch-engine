@@ -8,8 +8,8 @@ import org.joda.time.DateTimeZone._
 import im.mange.shoreditch.hipster.VersionedService
 import im.mange.shoreditch.hipster.Action
 import im.mange.shoreditch.hipster.Check
-import im.mange.shoreditch.engine.registry.Test
 import scala.reflect.io.Directory
+import im.mange.shoreditch.engine.model.Test
 
 //TODO: allow rendering as text/html
 

@@ -2,6 +2,7 @@ package im.mange.shoreditch.engine.registry
 
 import scala.reflect.io.Directory
 import im.mange.shoreditch.engine.Filepath
+import im.mange.shoreditch.engine.model.Test
 
 //TODO: when you run a test, it ends up in runs
 //when you click a run, it watches it in the results window
@@ -20,6 +21,8 @@ case class TestsRegistry(directory: String) {
     if (!dir.exists) createTest(TestIdCounter.next, exampleTemplate)
     dir.files.map(f => Test(f.lines().toList, f.name.split("\\.").head)).toList
   }
+
+  def find(id: String) = load.find(_.id == id)
 
   private def createTest(id: String, content: String) {
     dir.createDirectory(force = true)
