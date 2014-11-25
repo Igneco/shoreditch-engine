@@ -21,7 +21,7 @@ case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None)
       services, test.content, test.name
     )(clock)
 
-    script.beforeRun()
+    script.beforeRun(test.id)
     engine ! script
 
     while (!script.isCompleted) { Thread.`yield` }

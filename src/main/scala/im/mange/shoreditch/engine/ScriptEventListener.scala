@@ -10,7 +10,7 @@ trait ScriptEventListener {
  //TODO: not sure about script in here, find a better way ...
  // .. maybe some lightweight ScriptState thing
 
- def beforeStarted(script: Script): Unit
+ def beforeStarted(script: Script, testId: String): Unit
  def validated(testRunId: String, versionedServices: List[VersionedService]): Unit
  def started(when: LocalDateTime, script: Script): Unit
  def stopped(when: LocalDateTime, script: Script): Unit

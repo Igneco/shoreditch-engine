@@ -8,15 +8,14 @@ import im.mange.shoreditch.hipster.Check
 import im.mange.shoreditch.hipster.Action
 
 case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener {
-  def beforeStarted(script: Script) {
+  def beforeStarted(script: Script, testId: String) {
     //TODO: should have Test Id
-    println("\n### Running: " + script.name)
+    println("\n### Running: " + testId + " - " + script.name)
   }
 
   def validated(testRunId: String, versionedServices: List[VersionedService]) {
-    //TODO: do we actually get here if we fail validation? - I think so
-    //TODO: have a better message when no validated ...
-    println("### Validated with: " + versionedServices.map(v => v.alias + " " + v.offering.fold("Not Available")(_.version) + " (" + v.env.fold("Not Available")(_.toString) + ")").mkString(", ") )
+    val prefix = if (!versionedServices.forall(_.offering.isDefined)) "Validation failed"  else "Validated with"
+    println("### " + prefix + ": " + versionedServices.map(v => v.alias + " " + v.offering.fold("Not Available")(_.version) + " (" + v.env.fold("Not Available")(_.toString) + ")").mkString(", ") )
   }
 
   def started(when: LocalDateTime, script: Script) {

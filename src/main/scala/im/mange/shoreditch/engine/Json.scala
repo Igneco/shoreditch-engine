@@ -33,7 +33,9 @@ object Json {
 
   def serialise(r: List[In]) = {
     implicit val formats = shoreditchFormats
-    pretty(render(JsonParser.parse(write(r))))
+    val res = pretty(render(JsonParser.parse(write(r))))
+    println(res)
+    res
   }
 
   //TODO: we don't technically need this in the public api

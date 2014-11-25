@@ -16,7 +16,7 @@ import im.mange.shoreditch.engine.model.{TestRunReport, Test}
 case class TestRunReportListener(test: Test, outputDirectory: String) extends ScriptEventListener {
   private var services: List[VersionedService] = Nil
 
-  override def beforeStarted(script: Script) {}
+  override def beforeStarted(script: Script, testId: String) {}
   override def success(check: Check) { writeReport(check.script/*, Nil*/) }
   override def failure(check: Check, reasons: List[String]) { writeReport(check.script/*, reasons*/) }
   override def success(action: Action) { writeReport(action.script/*, Nil*/) }

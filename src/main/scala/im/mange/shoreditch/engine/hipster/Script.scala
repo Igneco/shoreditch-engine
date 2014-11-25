@@ -152,9 +152,10 @@ case class Script(engineEventListener: ScriptEventListener, private val services
     allVersionedServices.filterNot(_.offering.fold(false)(_.validated)).isEmpty
   }
 
-  def beforeRun() {
+  //TODO: passing the testId is nasty, the script should know it anyway
+  def beforeRun(testId: String) {
     testRunId = Some(TestRunIdCounter.next)
-    engineEventListener.beforeStarted(this)
+    engineEventListener.beforeStarted(this, testId)
   }
   
   //TODO: blow up if trying to start a previously run script
