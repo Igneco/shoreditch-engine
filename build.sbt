@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "1.6.0",
   "io.shaka" %% "naive-http" % "51",
   "im.mange" %% "shoreditch-api" % "0.0.60",
-  "org.scalatest" % "scalatest_2.10" % "2.1.4" % "test"
+  "org.scalatest" % "scalatest_2.11" % "[2.2.1,2.3.0]" % "provided"
 )
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
