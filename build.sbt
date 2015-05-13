@@ -22,6 +22,8 @@ libraryDependencies ++= Seq(
   "org.scalatest" % "scalatest_2.10" % "2.1.4" % "test"
 )
 
+net.virtualvoid.sbt.graph.Plugin.graphSettings
+
 sonatypeSettings
 
 publishTo <<= version { project_version ⇒
