@@ -1,11 +1,11 @@
 package im.mange.shoreditch.engine.listener
 
 import org.joda.time.LocalDateTime
-import im.mange.shoreditch.hipster._
+import im.mange.shoreditch.engine.hipster._
 import im.mange.shoreditch.engine.ScriptEventListener
-import im.mange.shoreditch.hipster.VersionedService
-import im.mange.shoreditch.hipster.Check
-import im.mange.shoreditch.hipster.Action
+import im.mange.shoreditch.engine.hipster.VersionedService
+import im.mange.shoreditch.engine.hipster.Check
+import im.mange.shoreditch.engine.hipster.Action
 
 case class CompositeListener(listeners: List[ScriptEventListener]) extends ScriptEventListener {
   override def beforeStarted(script: Script, testId: String) { listeners.foreach(_.beforeStarted(script, testId)) }

@@ -1,4 +1,4 @@
-package im.mange.shoreditch.hipster
+package im.mange.shoreditch.engine.hipster
 
 import java.util.concurrent.TimeUnit._
 import io.shaka.http.{Response, Request}

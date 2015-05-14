@@ -1,9 +1,9 @@
 package im.mange.shoreditch.engine.model
 
 import org.joda.time.DateTime
-import im.mange.shoreditch.hipster.Script
+import im.mange.shoreditch.engine.hipster.Script
 import org.joda.time.DateTimeZone._
-import im.mange.shoreditch.hipster.VersionedService
+import im.mange.shoreditch.engine.hipster.VersionedService
 import scala.Some
 
 object TestRunReport {

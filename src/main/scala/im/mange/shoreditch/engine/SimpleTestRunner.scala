@@ -3,7 +3,7 @@ package im.mange.shoreditch.engine
 import im.mange.shoreditch.engine.services.Services
 import akka.actor.{Props, ActorSystem}
 import im.mange.shoreditch.engine.listener.{CompositeListener, TestRunReportListener, LoggingListener}
-import im.mange.shoreditch.hipster.Script
+import im.mange.shoreditch.engine.hipster.Script
 import im.mange.shoreditch.engine.model.{TestPackRunReport, TestRunReport, TestPack, Test}
 
 //TODO: a little try catch wouldnt go amiss

@@ -1,4 +1,4 @@
-package im.mange.shoreditch.hipster
+package im.mange.shoreditch.engine.hipster
 
 import im.mange.shoreditch.api.{In, ActionResponse}
 import io.shaka.http.ContentType.APPLICATION_JSON

@@ -1,8 +1,8 @@
-package im.mange.shoreditch.hipster
+package im.mange.shoreditch.engine.hipster
 
 import org.joda.time.{DateTime, LocalDateTime}
 import im.mange.shoreditch.api.{CheckResponse, ActionResponse}
-import im.mange.shoreditch.hipster
+import im.mange.shoreditch.engine.hipster
 import im.mange.shoreditch.engine.{Clock, systems, ScriptEventListener}
 import im.mange.shoreditch.engine.services.{Service, Services}
 import im.mange.shoreditch.engine.systems.System

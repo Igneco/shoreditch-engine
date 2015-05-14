@@ -1,11 +1,11 @@
 package im.mange.shoreditch.engine.listener
 
 import org.joda.time.{Interval, LocalDateTime}
-import im.mange.shoreditch.hipster._
+import im.mange.shoreditch.engine.hipster._
 import im.mange.shoreditch.engine.{Clock, DateFormatForHumans, ScriptEventListener}
-import im.mange.shoreditch.hipster.VersionedService
-import im.mange.shoreditch.hipster.Check
-import im.mange.shoreditch.hipster.Action
+import im.mange.shoreditch.engine.hipster.VersionedService
+import im.mange.shoreditch.engine.hipster.Check
+import im.mange.shoreditch.engine.hipster.Action
 
 case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener {
   def beforeStarted(script: Script, testId: String) {

@@ -1,6 +1,6 @@
 package im.mange.shoreditch.engine
 
-import im.mange.shoreditch.hipster.{Step, Check, Action, Script}
+import im.mange.shoreditch.engine.hipster.{Step, Check, Action, Script}
 import io.shaka.http.TrustAllSslCertificates
 import im.mange.shoreditch.api.{CheckResponse, ActionResponse}
 import akka.actor.Actor

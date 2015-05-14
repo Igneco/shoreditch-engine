@@ -1,4 +1,4 @@
-package im.mange.shoreditch.hipster
+package im.mange.shoreditch.engine.hipster
 
 import org.joda.time.DateTime
 import im.mange.shoreditch.engine.Clock

@@ -1,4 +1,4 @@
-package im.mange.shoreditch.hipster
+package im.mange.shoreditch.engine.hipster
 
 import im.mange.shoreditch.api.{ActionResponse, CheckResponse}
 import io.shaka.http.Http._

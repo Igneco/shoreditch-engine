@@ -1,9 +1,9 @@
 package im.mange.shoreditch.engine
 
 import org.joda.time.LocalDateTime
-import im.mange.shoreditch.hipster._
-import im.mange.shoreditch.hipster.Action
-import im.mange.shoreditch.hipster.Check
+import im.mange.shoreditch.engine.hipster._
+import im.mange.shoreditch.engine.hipster.Action
+import im.mange.shoreditch.engine.hipster.Check
 
 //TODO: we should notify if the script ultimately passed or failed (i.e was aborted after n attempts
 trait ScriptEventListener {
