@@ -21,7 +21,7 @@ object TestRunReport {
         test.name,
         script.steps.map(st => StepSummary(st.mangledDescription, st.completedAt))
       ),
-      if (script.successful) Nil else List(script.abortedBecause.getOrElse("?????"))
+      if (script.successful) Nil else script.abortedBecause.fold(List("?????"))(r => r)
     )
 }
 

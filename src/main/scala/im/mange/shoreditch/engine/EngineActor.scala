@@ -34,7 +34,7 @@ class EngineActor extends Actor {
       if (!script.isCompleted) queue(script.nextStep)
     } else {
       //TODO: should fine tune the message
-      script.abort("Systems could not be validated")
+      script.abort(List("Systems could not be validated"))
     }
   }
 
@@ -65,7 +65,7 @@ class EngineActor extends Actor {
     }
     catch {
       //TODO: we should probably do wthat action does above ... still thinking whats best ...
-      case e: Exception => e.printStackTrace(); check.script.update(check, CheckResponse(List(e.getMessage))); check.script.abort(e.getMessage)
+      case e: Exception => e.printStackTrace(); check.script.update(check, CheckResponse(List(e.getMessage))); check.script.abort(List(e.getMessage))
     }
 
     if (!check.script.isCompleted) queue(check.script.nextStep) else check.script.stop()

@@ -51,7 +51,7 @@ case class ServiceOffering(env: String, version: String, validated: Boolean)
 case class Script(engineEventListener: ScriptEventListener, private val services: Services, var steps: Seq[Step] = Nil, name: String)(implicit clock: Clock) {
   //TODO: provide methods for getting/checking vars/aborting, so we can hide these again
   var context = Map[String, String]()
-  private var aborted: Option[String] = None
+  private var aborted: Option[List[String]] = None
   private var started: Option[LocalDateTime] = None
   private var stopped: Option[LocalDateTime] = None
   private var validatedServices: Option[List[VersionedService]] = None
@@ -179,7 +179,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   }
 
   //TODO: we should this everywhere we do an abort and hide the member access
-  def abort(reason: String) {
+  def abort(reason: List[String]) {
     aborted = Some(reason)
     //TODO: still needed?
     //TODO: should be using the clock()
@@ -207,7 +207,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
       }
       case ActionResponse(failures, _) => {
         if (!isAborted) engineEventListener.failure(action, failures)
-        aborted = Some(failures.head)
+        aborted = Some(failures)
       }
       //TODO case _
     }
