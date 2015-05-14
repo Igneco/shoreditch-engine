@@ -63,12 +63,16 @@ case class Action(id: Long, description: String) extends Step {
 
     GoldenRetriever.doRunRun(request) match {
       case Left(e) => ActionResponse(List(e.getMessage), None)
-      case Right(r) => Json.deserialiseActionResponse(r.entityAsString)
+      case Right(r) => {
+        val response = r.entityAsString
+        try {
+          Json.deserialiseActionResponse(response)
+        }
+        catch {
+          case e: Exception => ActionResponse(e.getMessage :: response.split("\n").toList, None)
+        }
+      }
     }
-//    val r = http(request)
-//    println("### r: " + r.entityAsString)
-
-    //    ActionResponse(List("broek"), None)
   }
 
   //☐
