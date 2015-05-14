@@ -19,7 +19,7 @@ object TestRunReport {
       }),
       ScriptSummary(
         test.name,
-        script.steps.map(st => StepSummary(st.mangledDescription, st.completedAt))
+        script.steps.map(st => StepSummary(st.mangledDescription, st.startedAt, st.completedAt))
       ),
       if (script.successful) Nil else script.abortedBecause.fold(List("?????"))(r => r)
     )
@@ -29,7 +29,7 @@ object TestRunReport {
 //TODO: indicate missing=true
 case class ServiceSummary(alias: String, env: Option[String], version: Option[String])
 //TODO: I should hold failures
-case class StepSummary(description: String, completed: Option[DateTime])
+case class StepSummary(description: String, started: Option[DateTime], completed: Option[DateTime])
 case class ScriptSummary(description: String, steps: Seq[StepSummary])
 
 case class TestRunReport(testId: String, testRunId: String, started: Option[DateTime], completed: Option[DateTime],
