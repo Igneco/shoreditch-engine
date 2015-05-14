@@ -31,7 +31,15 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
 
     GoldenRetriever.doRunRun(GET(requestUrl)) match {
       case Left(e) => CheckResponse(List(e.getMessage))
-      case Right(r) => Json.deserialiseCheckResponse(r.entityAsString)
+      case Right(r) => {
+        val response = r.entityAsString
+        try {
+          Json.deserialiseCheckResponse(response)
+        }
+        catch {
+          case e: Exception => CheckResponse(e.getMessage :: response.split("\n").toList)
+        }
+      }
     }
   }
 
