@@ -1,5 +1,6 @@
 package im.mange.shoreditch.engine.hipster
 
+import im.mange.little.LittleClient
 import im.mange.shoreditch.api.{ActionResponse, CheckResponse}
 import io.shaka.http.Http._
 import io.shaka.http.Request.GET
@@ -29,7 +30,7 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
     val requestUrl = this.script.systemUrlFor(in + "/" + me + "/" + rawParams.map(rp => "@?").mkString("/")) + "/" + me + "/" + params.mkString("/")
     /*if (debug) */ //println("### " + this + " = " + request)
 
-    GoldenRetriever.doRunRun(GET(requestUrl)) match {
+    LittleClient.doRunRun(GET(requestUrl)) match {
       case Left(e) => CheckResponse(List(e.getMessage))
       case Right(r) => {
         val response = r.entityAsString

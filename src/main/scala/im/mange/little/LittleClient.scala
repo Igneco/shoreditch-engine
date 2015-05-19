@@ -1,5 +1,12 @@
-package im.mange.shoreditch.engine.hipster
+package im.mange.little
 
+import java.util.concurrent.TimeUnit._
+
+import io.shaka.http.Http._
+import io.shaka.http.{Request, Response}
+
+import scala.concurrent._
+import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit._
 import io.shaka.http.{Response, Request}
 import io.shaka.http.Http._
@@ -7,9 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
 
-//TIP: to cancel ... http://stackoverflow.com/questions/16009837/how-to-cancel-future-in-scala
-
-object GoldenRetriever {
+object LittleClient {
   def doRunRun(request: Request): Either[Exception, Response] = {
     try {
       //OR blocking

@@ -1,5 +1,6 @@
 package im.mange.shoreditch.engine.hipster
 
+import im.mange.little.LittleClient
 import im.mange.shoreditch.api.{In, ActionResponse}
 import io.shaka.http.ContentType.APPLICATION_JSON
 import io.shaka.http.Http._
@@ -61,7 +62,7 @@ case class Action(id: Long, description: String) extends Step {
     val json = Json.serialise(mangledIn.get)
     val request = POST(requestUrl).contentType(APPLICATION_JSON.value).entity(json)
 
-    GoldenRetriever.doRunRun(request) match {
+    LittleClient.doRunRun(request) match {
       case Left(e) => ActionResponse(List(e.getMessage), None)
       case Right(r) => {
         val response = r.entityAsString
