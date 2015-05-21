@@ -206,7 +206,9 @@ case class Script(engineEventListener: ScriptEventListener, private val services
         if (!isAborted) engineEventListener.success(action)
       }
       case ActionResponse(failures, _) => {
+        println("### the action failed with:" + failures.mkString("\n"))
         if (!isAborted) engineEventListener.failure(action, failures)
+        //TODO: shouldnt this be: abort(Some(failures))
         aborted = Some(failures)
       }
     }
