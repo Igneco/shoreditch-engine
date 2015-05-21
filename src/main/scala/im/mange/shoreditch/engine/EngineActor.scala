@@ -41,14 +41,17 @@ class EngineActor extends Actor {
   //TODO: exception handling
   //TODO: put the queuing in the Script
   private def doAction(action: Action) {
-//    println("doAction: " + action)
     try {
       action.start()(clock)
       action.script.running(action)
       action.script.update(action, action.run)
     }
     catch {
-      case e: Exception => e.printStackTrace(); action.script.update(action, ActionResponse(List(e.getMessage), None))
+      case e: Exception => {
+        e.printStackTrace()
+        action.script.update(action, ActionResponse(List(e.getMessage), None))
+        action.script.abort(List("Action aborted due to:" + e.getMessage))
+      }
     }
 
     if (!action.script.isCompleted) queue(action.script.nextStep) else action.script.stop()
@@ -57,7 +60,6 @@ class EngineActor extends Actor {
   //TODO: exception handling
   //TODO: put the queuing in the Script
   private def doCheck(check: Check) {
-//    println("doCheck: " + check)
     try {
       check.start()(clock)
       check.script.running(check)
@@ -65,7 +67,11 @@ class EngineActor extends Actor {
     }
     catch {
       //TODO: we should probably do wthat action does above ... still thinking whats best ...
-      case e: Exception => e.printStackTrace(); check.script.update(check, CheckResponse(List(e.getMessage))); check.script.abort(List(e.getMessage))
+      case e: Exception => {
+        e.printStackTrace()
+        check.script.update(check, CheckResponse(List(e.getMessage)))
+        check.script.abort(List("Check aborted due to:" + e.getMessage))
+      }
     }
 
     if (!check.script.isCompleted) queue(check.script.nextStep) else check.script.stop()
