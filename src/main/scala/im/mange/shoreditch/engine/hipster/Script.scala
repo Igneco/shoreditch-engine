@@ -209,7 +209,6 @@ case class Script(engineEventListener: ScriptEventListener, private val services
         if (!isAborted) engineEventListener.failure(action, failures)
         aborted = Some(failures)
       }
-      //TODO case _
     }
   }
 
@@ -223,7 +222,6 @@ case class Script(engineEventListener: ScriptEventListener, private val services
         check.failedAttempts = check.failedAttempts + 1
         if (!isAborted) engineEventListener.failure(check, failures)
       }
-      //TODO case _
     }
   }
 

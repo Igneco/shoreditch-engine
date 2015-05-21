@@ -32,7 +32,7 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
   def running(step: Step) {}
 
   def failure(action: Action, failures: List[String]) {
-    println("### Failed: " + action + " with: " + failures.head)
+    println("### Failed: " + action + " with: " + failures.headOption.getOrElse("No reason supplied"))
   }
 
   def success(action: Action) { print(action, None) }
