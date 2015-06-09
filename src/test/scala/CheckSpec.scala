@@ -9,6 +9,7 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.in mustEqual "barry"
     check.rawParams mustEqual Array("arg1")
     check.me mustEqual "check/method"
+    check.serviceKey mustEqual "barry/check/method/@?"
   }
 
   "simple check with multiple args" in {
@@ -17,6 +18,7 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.in mustEqual "barry"
     check.rawParams mustEqual Array("arg1", "arg2", "arg3")
     check.me mustEqual "check/method"
+    check.serviceKey mustEqual "barry/check/method/@?/@?/@?"
   }
 
   "simple check with multiple method bits" in {
@@ -25,6 +27,7 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.in mustEqual "barry"
     check.rawParams mustEqual Array("arg1")
     check.me mustEqual "check/a/really/long/method"
+    check.serviceKey mustEqual "barry/check/a/really/long/method/@?"
   }
 
   "simple check with no args" in {
@@ -33,6 +36,7 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.in mustEqual "barry"
     check.rawParams mustEqual Array()
     check.me mustEqual "check/method"
+    check.serviceKey mustEqual "barry/check/method"
   }
 
   "simple check with no args with extra whitespace" in {
@@ -41,5 +45,6 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.in mustEqual "barry"
     check.rawParams mustEqual Array()
     check.me mustEqual "check/method"
+    check.serviceKey mustEqual "barry/check/method"
   }
 }

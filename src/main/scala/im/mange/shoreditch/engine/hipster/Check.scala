@@ -18,6 +18,7 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
 
   val requiredSystem = in
   val me = method.init.mkString("/")
+  val serviceKey = in + "/" + me + "/" + rawParams.map(rp => "@?").mkString("/")
 
   def run: CheckResponse = {
 
@@ -29,7 +30,7 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
     //    val params = rawParams.map(p => script.context.getOrElse(p, "123"))
     //TODO: ick probably need to encode these, or POST instead
 
-    val requestUrl = this.script.systemUrlFor(in + "/" + me + "/" + rawParams.map(rp => "@?").mkString("/")) + "/" + me + "/" + params.mkString("/")
+    val requestUrl = this.script.systemUrlFor(serviceKey) + "/" + me + "/" + params.mkString("/")
     /*if (debug) */ //println("### " + this + " = " + request)
 
     LittleClient.doRunRun(GET(requestUrl)) match {
