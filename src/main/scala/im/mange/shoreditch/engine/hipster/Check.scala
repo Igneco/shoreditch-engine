@@ -18,7 +18,7 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
 
   val requiredSystem = in
   val me = method.init.mkString("/")
-  val serviceKey = in + "/" + me + "/" + rawParams.map(rp => "@?").mkString("/")
+  val serviceKey = in + "/" + me + (if (isParamaterless) ""  else "/" + rawParams.map(rp => "@?").mkString("/"))
 
   def run: CheckResponse = {
 
