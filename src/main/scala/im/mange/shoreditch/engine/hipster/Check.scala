@@ -9,10 +9,10 @@ import io.shaka.http.Request.GET
 //countout
 //timeout
 case class Check(id: Long, description: String, var failedAttempts: Int = 0) extends Step {
-//  private val isParamaterless = !description.contains("=>")
+  private val isParamaterless = !description.contains("=>")
 
-  private val method = description.split("=>").head.split(" ")
-  val rawParams = description.split("=>").last.split(" ").map(_.trim).filterNot(_.isEmpty)
+  private val method = (if (isParamaterless) description else description.split("=>").head).split(" ")
+  val rawParams = if (isParamaterless) Array.empty[String] else description.split("=>").last.split(" ").map(_.trim).filterNot(_.isEmpty)
   val pure = method.init.mkString(" ")
   val in = method.last.split(":").last
 
@@ -28,6 +28,7 @@ case class Check(id: Long, description: String, var failedAttempts: Int = 0) ext
     val params = rawParams.map(p => if (p.trim.startsWith("@")) script.context.getOrElse(p, throw new RuntimeException("no value for: " + p)) else p)
     //    val params = rawParams.map(p => script.context.getOrElse(p, "123"))
     //TODO: ick probably need to encode these, or POST instead
+
     val requestUrl = this.script.systemUrlFor(in + "/" + me + "/" + rawParams.map(rp => "@?").mkString("/")) + "/" + me + "/" + params.mkString("/")
     /*if (debug) */ //println("### " + this + " = " + request)
 

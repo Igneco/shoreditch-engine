@@ -28,12 +28,10 @@ class CheckSpec extends WordSpec with MustMatchers {
   }
 
   "simple check with no args" in {
-    (pending)
     val check = Check(1, "check method in:barry")
     check.pure mustEqual "check method"
     check.in mustEqual "barry"
     check.rawParams mustEqual Array()
     check.me mustEqual "check/method"
   }
-
 }
