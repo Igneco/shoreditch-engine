@@ -1,15 +1,16 @@
 package im.mange.shoreditch.engine.hipster
 
 import im.mange.little.LittleClient
-import im.mange.shoreditch.api.{ActionResponse, CheckResponse}
-import io.shaka.http.Http._
-import io.shaka.http.Request.GET
+import im.mange.shoreditch.api.CheckResponse
 import im.mange.shoreditch.engine.Json
+import io.shaka.http.Request.GET
 
 //TODO:
 //countout
 //timeout
 case class Check(id: Long, description: String, var failedAttempts: Int = 0) extends Step {
+//  private val isParamaterless = !description.contains("=>")
+
   private val method = description.split("=>").head.split(" ")
   val rawParams = description.split("=>").last.split(" ").map(_.trim).filterNot(_.isEmpty)
   val pure = method.init.mkString(" ")
