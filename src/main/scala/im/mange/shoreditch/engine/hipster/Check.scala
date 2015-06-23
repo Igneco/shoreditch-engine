@@ -8,10 +8,11 @@ import io.shaka.http.Request.GET
 //TODO:
 //countout
 //timeout
-case class Check(id: Long, description: String, var failedAttempts: Int = 0) extends Step {
+case class Check(id: Long, uncleanDescription: String, var failedAttempts: Int = 0) extends Step {
+  val description = uncleanDescription.trim.replaceAll(" +", " ")
   private val isParamaterless = !description.contains("=>")
 
-  private val method = (if (isParamaterless) description else description.split("=>").head).replaceAll("  ", " ").split(" ")
+  private val method = (if (isParamaterless) description else description.split("=>").head).split(" ")
   val rawParams = if (isParamaterless) Array.empty[String] else description.split("=>").last.split(" ").map(_.trim).filterNot(_.isEmpty)
   val pure = method.init.mkString(" ")
   val in = method.last.split(":").last
