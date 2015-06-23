@@ -22,15 +22,8 @@ case class Check(id: Long, uncleanDescription: String, var failedAttempts: Int =
   val serviceKey = in + "/" + me + (if (isParamaterless) ""  else "/" + rawParams.map(rp => "@?").mkString("/"))
 
   def run: CheckResponse = {
-
-    //    val me = in + method.split(" ").filterNot(_.trim().startsWith("@")).mkString("/")
-
-    //    println("### rawParams: " + rawParams.toList)
     //TODO: or args? which is more usery
     val params = rawParams.map(p => if (p.trim.startsWith("@")) script.context.getOrElse(p, throw new RuntimeException("no value for: " + p)) else p)
-    //    val params = rawParams.map(p => script.context.getOrElse(p, "123"))
-    //TODO: ick probably need to encode these, or POST instead
-
     val requestUrl = this.script.systemUrlFor(serviceKey) + "/" + me + "/" + params.mkString("/")
     /*if (debug) */ //println("### " + this + " = " + request)
 
@@ -48,9 +41,7 @@ case class Check(id: Long, uncleanDescription: String, var failedAttempts: Int =
     }
   }
 
-  //  returnValue.fold("")(v => script.context.getOrElse(v, v)) + " <= " +
   def describe = (if (isCompleted) "☑" else "☒") + " - " + mangledDescription
   def mangledDescription = method.mkString(" ") + " => " + replacedParams.mkString(" ")
-
   def replacedParams = rawParams.map(p => script.context.getOrElse(p, p))
 }
