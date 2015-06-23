@@ -11,7 +11,7 @@ import io.shaka.http.Request.GET
 case class Check(id: Long, description: String, var failedAttempts: Int = 0) extends Step {
   private val isParamaterless = !description.contains("=>")
 
-  private val method = (if (isParamaterless) description else description.split("=>").head).split(" ")
+  private val method = (if (isParamaterless) description else description.split("=>").head).replaceAll("  ", " ").split(" ")
   val rawParams = if (isParamaterless) Array.empty[String] else description.split("=>").last.split(" ").map(_.trim).filterNot(_.isEmpty)
   val pure = method.init.mkString(" ")
   val in = method.last.split(":").last

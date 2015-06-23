@@ -1,6 +1,7 @@
 import im.mange.shoreditch.engine.hipster.Check
 import org.scalatest.{MustMatchers, WordSpec}
 
+//TOOD: we need a corresponding ActionSpec
 class CheckSpec extends WordSpec with MustMatchers {
 
   "simple check" in {
@@ -39,8 +40,17 @@ class CheckSpec extends WordSpec with MustMatchers {
     check.serviceKey mustEqual "barry/check/method"
   }
 
-  "simple check with no args with extra whitespace" in {
+  "simple check with no args with extra whitespace in params" in {
     val check = Check(1, "check method in:barry   ")
+    check.pure mustEqual "check method"
+    check.in mustEqual "barry"
+    check.rawParams mustEqual Array()
+    check.me mustEqual "check/method"
+    check.serviceKey mustEqual "barry/check/method"
+  }
+
+  "simple check with no args with extra whitespace in method" in {
+    val check = Check(1, "check method   in:barry")
     check.pure mustEqual "check method"
     check.in mustEqual "barry"
     check.rawParams mustEqual Array()
