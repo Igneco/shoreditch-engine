@@ -13,6 +13,8 @@ resolvers ++= Seq(
   "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
 )
 
+resolvers     += Resolver.sonatypeRepo("releases")
+
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.5",
   "net.liftweb" %% "lift-json" % "2.6",
