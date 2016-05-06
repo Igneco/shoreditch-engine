@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "org.scalatest" % "scalatest_2.11" % "[2.2.1,2.3.0]" % "provided"
 )
 
-net.virtualvoid.sbt.graph.Plugin.graphSettings
+//net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 sonatypeSettings
 
