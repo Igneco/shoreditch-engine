@@ -4,9 +4,9 @@ scala:
 jdk:
 - oraclejdk8
 
-sudo: required
-
-before_script: ./scripts/prepublish.sh
+before_script:
+- curl -L -o $HOME/.sbt/launchers/0.13.8/sbt-launch.jar http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.8/sbt-launch.jar
+- ./scripts/prepublish.sh
 script: ./scripts/ci-build.sh
 
 env:
