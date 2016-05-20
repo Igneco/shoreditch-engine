@@ -16,8 +16,10 @@ case class Services(systems: Seq[System]) {
   //TODO: probably need to make env be part of the service key too (and populate from run-with
   //TODO: blow up if service key already exists
   raw = systems.map(system => {
+    val metaDataUrl = system.url + "/metadata"
+
     try {
-      val metaData = Json.deserialiseMetaDataResponse(HttpClient.unsafeGet(system.url + "/metadata"))
+      val metaData = Json.deserialiseMetaDataResponse(HttpClient.unsafeGet(metaDataUrl))
       if (debug) println("### " + system.alias + " " + metaData.version + " - actions: " + metaData.actions.size + ", checks: " + metaData.checks.size)
 
       metaData.actions.map(service => {
@@ -37,7 +39,7 @@ case class Services(systems: Seq[System]) {
 
       Some(Service(system, metaData))
     } catch {
-      case e: Exception => println("### error discovering: " + system.url + s" ${e.getMessage}"); None
+      case e: Exception => println("### error discovering: " + metaDataUrl + s" ${e.getMessage}"); None
     }
   }).flatten
 
