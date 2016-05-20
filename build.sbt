@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "net.liftweb" %% "lift-json" % "2.6",
   "com.github.nscala-time" %% "nscala-time" % "1.6.0",
   "io.shaka" %% "naive-http" % "51",
-  "im.mange" %% "shoreditch-api" % "0.0.68",
+  "im.mange" %% "shoreditch-api" % "0.0.69",
   "org.scalatest" % "scalatest_2.11" % "[2.2.1,2.3.0]" % "provided"
 )
 
