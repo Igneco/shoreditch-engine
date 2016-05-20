@@ -6,7 +6,7 @@ import im.mange.shoreditch.engine.{Json, HttpClient}
 
 //TODO: should be a refresh or discover method or something ...
 case class Services(systems: Seq[System]) {
-  val debug = false
+  val debug = true
   private val supportedServiceTypes = List("action", "check")
 
   var raw = Seq[Service]()
@@ -39,7 +39,7 @@ case class Services(systems: Seq[System]) {
 
       Some(Service(system, metaData))
     } catch {
-      case e: Exception => println("### error discovering: " + metaDataUrl + s" ${e.getMessage}"); None
+      case e: Exception => println("### error discovering services from metadata: " + metaDataUrl + s" ${e.getMessage}"); None
     }
   }).flatten
 
