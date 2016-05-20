@@ -24,8 +24,7 @@ case class Check(id: Long, uncleanDescription: String, var failedAttempts: Int =
   def run(debug: Boolean): CheckResponse = {
     //TODO: or args? which is more usery
     val params = rawParams.map(p => if (p.trim.startsWith("@")) script.context.getOrElse(p, throw new RuntimeException("no value for: " + p)) else p)
-    val requestUrl = this.script.systemUrlFor(serviceKey) + "/" + me + "/" + params.mkString("/")
-    /*if (debug) */ //println("### " + this + " = " + request)
+    val requestUrl = this.script.systemUrlFor(serviceKey) + "/" + me + (if (params.isEmpty) "" else "/" + params.mkString("/"))
 
     if (debug) println(s"Running check: $requestUrl")
 
