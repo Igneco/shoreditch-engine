@@ -37,7 +37,7 @@ case class Services(systems: Seq[System]) {
 
       Some(Service(system, metaData))
     } catch {
-      case _: Exception => println("### error discovering: " + system.url); None
+      case e: Exception => println("### error discovering: " + system.url + s" ${e.getMessage}"); None
     }
   }).flatten
 
