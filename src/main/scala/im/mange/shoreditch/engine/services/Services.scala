@@ -5,8 +5,7 @@ import im.mange.shoreditch.engine.systems.System
 import im.mange.shoreditch.engine.{Json, HttpClient}
 
 //TODO: should be a refresh or discover method or something ...
-case class Services(systems: Seq[System]) {
-  val debug = true
+case class Services(systems: Seq[System], debug: Boolean = false) {
   private val supportedServiceTypes = List("action", "check")
 
   var raw = Seq[Service]()

@@ -8,13 +8,15 @@ import im.mange.shoreditch.engine.model.{TestPackRunReport, TestRunReport, TestP
 
 //TODO: a little try catch wouldnt go amiss
 //TODO: not to mention a little actor/actor system safety - share across tests etc
-case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None) {
+case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None, debug: Boolean = false) {
   def run(test: Test, services: Services): TestRunReport = {
     //TODO: hide this, so that users see no akka, hear no akka
     val actorSystem = ActorSystem.create()
     val engine = actorSystem.actorOf(Props(new EngineActor))
     val clock = RealClock
     val listeners = LoggingListener()(clock) :: testRunReportOutputDirectory.fold(List.empty[ScriptEventListener])(d => List(TestRunReportListener(test, d)))
+
+    if (debug) println("Going to with:\n" + services)
 
     val script = Script.parse(
       CompositeListener(listeners),
