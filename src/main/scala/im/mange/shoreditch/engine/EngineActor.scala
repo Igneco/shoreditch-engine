@@ -44,7 +44,7 @@ class EngineActor extends Actor {
     try {
       action.start()(clock)
       action.script.running(action)
-      action.script.update(action, action.run)
+      action.script.update(action, action.run(action.script.debug))
     }
     catch {
       case e: Exception => {
@@ -63,7 +63,7 @@ class EngineActor extends Actor {
     try {
       check.start()(clock)
       check.script.running(check)
-      check.script.update(check, check.run)
+      check.script.update(check, check.run(check.script.debug))
     }
     catch {
       //TODO: we should probably do wthat action does above ... still thinking whats best ...

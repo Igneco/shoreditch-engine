@@ -43,7 +43,7 @@ case class Action(id: Long, description: String) extends Step {
   var mangledIn: Option[List[In]] = None
   val me = "action/" + method.init.mkString("/")
 
-  def run: ActionResponse = {
+  def run(debug: Boolean): ActionResponse = {
 //    println(in)
 //    println(method.toList)
 
@@ -61,6 +61,8 @@ case class Action(id: Long, description: String) extends Step {
 
     val json = Json.serialise(mangledIn.get)
     val request = POST(requestUrl).contentType(APPLICATION_JSON.value).entity(json)
+
+    if (debug) println(s"Running action: $request")
 
     LittleClient.doRunRun(request) match {
       case Left(e) => ActionResponse(List(e.getMessage), None)

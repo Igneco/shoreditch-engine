@@ -21,11 +21,13 @@ case class Check(id: Long, uncleanDescription: String, var failedAttempts: Int =
   val me = method.init.mkString("/")
   val serviceKey = in + "/" + me + (if (isParamaterless) ""  else "/" + rawParams.map(rp => "@?").mkString("/"))
 
-  def run: CheckResponse = {
+  def run(debug: Boolean): CheckResponse = {
     //TODO: or args? which is more usery
     val params = rawParams.map(p => if (p.trim.startsWith("@")) script.context.getOrElse(p, throw new RuntimeException("no value for: " + p)) else p)
     val requestUrl = this.script.systemUrlFor(serviceKey) + "/" + me + "/" + params.mkString("/")
     /*if (debug) */ //println("### " + this + " = " + request)
+
+    if (debug) println(s"Running check: $requestUrl")
 
     LittleClient.doRunRun(GET(requestUrl)) match {
       case Left(e) => CheckResponse(List(e.getMessage))
