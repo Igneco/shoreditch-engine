@@ -20,7 +20,7 @@ case class SimpleTestRunner(testRunReportOutputDirectory: Option[String] = None,
 
     val script = Script.parse(
       CompositeListener(listeners),
-      services, test.content, test.name
+      services, test.content, test.name, debug
     )(clock)
 
     script.beforeRun(test.id)

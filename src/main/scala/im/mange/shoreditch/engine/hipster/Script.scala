@@ -27,8 +27,10 @@ import im.mange.shoreditch.engine.registry.TestRunIdCounter
 //TODO: should testRunId be a case class of the test id and the run id ...
 //TODO: we need an if (debug)
 object Script {
-  def parse(engineEventListener: ScriptEventListener, services: Services, lines: Seq[String], name: String)(implicit clock: Clock) = {
-    val script = hipster.Script(engineEventListener, services, Nil, name)
+  def parse(engineEventListener: ScriptEventListener, services: Services, lines: Seq[String],
+            name: String, debug: Boolean)(implicit clock: Clock) = {
+
+    val script = hipster.Script(engineEventListener, services, Nil, name, debug)
     val stepFactory = StepFactory()
     val steps = lines.map(l => {
       val step = stepFactory.create(l)
@@ -48,7 +50,8 @@ case class ServiceOffering(env: String, version: String, validated: Boolean)
 
 //TODO: surely some of these vars can be private at least
 //TODO: store the testRunId = TestRunIdCounter.next
-case class Script(engineEventListener: ScriptEventListener, private val services: Services, var steps: Seq[Step] = Nil, name: String)(implicit clock: Clock) {
+case class Script(engineEventListener: ScriptEventListener, private val services: Services, var steps: Seq[Step] = Nil,
+                  name: String, debug: Boolean)(implicit clock: Clock) {
   //TODO: provide methods for getting/checking vars/aborting, so we can hide these again
   var context = Map[String, String]()
   private var aborted: Option[List[String]] = None
@@ -88,9 +91,8 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   def successful = isCompleted && !isAborted && hasStarted
 
   def validate() = {
-    val debug = false
     val requiredSystemAliases = steps.map(_.requiredSystem).distinct.sorted
-//    println("### requiredSystemAliases: " + requiredSystemAliases)
+    if (debug) println("### requiredSystemAliases: " + requiredSystemAliases)
 
 //    val availableSystems = services.systems.map(s => AvailableSystems(s.alias, services.systems.filter(_.alias == s.alias)))
 
@@ -113,7 +115,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
     ).flatten
 
 //    println("### availableServices: " + availableServices)
-//    println("### availableServices: " + availableServices.map(_.system.alias))
+    if (debug) println("### availableServices: " + availableServices.map(_.system.alias))
 
     val requiredVersionedServices = availableServices.map(as =>
 //      as match {
