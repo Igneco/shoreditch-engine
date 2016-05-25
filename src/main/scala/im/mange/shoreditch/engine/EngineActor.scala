@@ -28,13 +28,12 @@ class EngineActor extends Actor {
   //TODO: exception handling
   //TODO: put the queuing in the Script
   private def doScript(script: Script) {
-    //TODO: abort when validation fails
-    if (script.validate()) {
+    val validationErrors = script.validate()
+    if (validationErrors.isEmpty) {
       script.start()
       if (!script.isCompleted) queue(script.nextStep)
     } else {
-      //TODO: should fine tune the message
-      script.abort(List("Systems could not be validated"))
+      script.abort("Systems could not be validated:" :: validationErrors.toList)
     }
   }
 

@@ -90,7 +90,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
   
   def successful = isCompleted && !isAborted && hasStarted
 
-  def validate() = {
+  def validate(): Seq[String] = {
     val requiredSystemAliases = steps.map(_.requiredSystem).distinct.sorted
     if (debug) println("### requiredSystemAliases: " + requiredSystemAliases)
 
@@ -151,7 +151,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
     engineEventListener.validated(testRunId.get, allVersionedServices)
     //TODO: this is simply shameful
     validatedServices = Some(allVersionedServices)
-    allVersionedServices.filterNot(_.offering.fold(false)(_.validated)).isEmpty
+    allVersionedServices.filterNot(vs => vs.offering.fold(false)(_.validated)).map(_.alias)//.isEmpty
   }
 
   //TODO: passing the testId is nasty, the script should know it anyway
