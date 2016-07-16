@@ -1,7 +1,6 @@
 import im.mange.shoreditch.engine.hipster.Check
 import org.scalatest.{MustMatchers, WordSpec}
 
-//TOOD: we need a corresponding ActionSpec
 class CheckSpec extends WordSpec with MustMatchers {
 
   "simple check" in {
