@@ -2,7 +2,7 @@ package im.mange.shoreditch.engine
 
 import im.mange.shoreditch.engine.hipster.{Step, Check, Action, Script}
 import io.shaka.http.TrustAllSslCertificates
-import im.mange.shoreditch.api.{CheckResponse, ActionResponse}
+import im.mange.shoreditch.{CheckResponse, ActionResponse}
 import akka.actor.Actor
 
 //TODO: make this a capturing actor so we can see what goes on

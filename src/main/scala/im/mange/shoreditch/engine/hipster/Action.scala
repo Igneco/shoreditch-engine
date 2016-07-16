@@ -1,7 +1,7 @@
 package im.mange.shoreditch.engine.hipster
 
 import im.mange.little.LittleClient
-import im.mange.shoreditch.api.{In, ActionResponse}
+import im.mange.shoreditch.{In, ActionResponse}
 import io.shaka.http.ContentType.APPLICATION_JSON
 import io.shaka.http.Http._
 import io.shaka.http.Request.POST

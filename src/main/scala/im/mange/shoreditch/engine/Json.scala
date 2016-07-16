@@ -3,10 +3,8 @@ package im.mange.shoreditch.engine
 import net.liftweb.json._
 import net.liftweb.json.Serialization._
 import net.liftweb.json.{JsonParser, NoTypeHints, Serialization}
-import im.mange.shoreditch.api.MetaDataResponse
-import im.mange.shoreditch.api.ActionResponse
-import im.mange.shoreditch.api.In
-import im.mange.shoreditch.api.CheckResponse
+import im.mange.shoreditch.api._
+import im.mange.shoreditch._
 import im.mange.shoreditch.engine.model.TestRunReport
 
 //TODO: probably better to have: CheckResponseJson.x etc

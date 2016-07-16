@@ -1,7 +1,7 @@
 package im.mange.shoreditch.engine.hipster
 
 import im.mange.little.LittleClient
-import im.mange.shoreditch.api.CheckResponse
+import im.mange.shoreditch.CheckResponse
 import im.mange.shoreditch.engine.Json
 import io.shaka.http.Request.GET
 
