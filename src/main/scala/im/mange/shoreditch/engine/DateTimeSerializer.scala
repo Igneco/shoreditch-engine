@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import net.liftweb.json.TypeInfo
 
+//TODO: I think little may already have this ... if not migrate it
 class DateTimeSerializer extends Serializer[DateTime] {
   private val pattern = ISODateTimeFormat.dateTime()
   private val TheClass = classOf[DateTime]

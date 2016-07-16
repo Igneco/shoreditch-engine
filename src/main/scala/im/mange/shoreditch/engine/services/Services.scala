@@ -1,8 +1,11 @@
 package im.mange.shoreditch.engine.services
 
+import im.mange.little.LittleClient
+
 import scala.collection.immutable.HashMap
 import im.mange.shoreditch.engine.systems.System
-import im.mange.shoreditch.engine.{Json, HttpClient}
+import im.mange.shoreditch.engine.Json
+import io.shaka.http.Request.GET
 
 //TODO: should be a refresh or discover method or something ...
 case class Services(systems: Seq[System], debug: Boolean = false) {
@@ -18,7 +21,7 @@ case class Services(systems: Seq[System], debug: Boolean = false) {
     val metaDataUrl = system.url + "/metadata"
 
     try {
-      val metaData = Json.deserialiseMetaDataResponse(HttpClient.unsafeGet(metaDataUrl))
+      val metaData = Json.deserialiseMetaDataResponse(LittleClient.unsafeRunAsString(GET(metaDataUrl)))
       if (debug) println("### " + system.alias + " " + metaData.version + " - actions: " + metaData.actions.size + ", checks: " + metaData.checks.size)
 
       metaData.actions.map(service => {

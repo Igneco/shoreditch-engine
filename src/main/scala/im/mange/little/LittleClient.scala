@@ -3,19 +3,22 @@ package im.mange.little
 import java.util.concurrent.TimeUnit._
 
 import io.shaka.http.Http._
-import io.shaka.http.{Request, Response}
+import io.shaka.http._
 
-import scala.concurrent._
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit._
-import io.shaka.http.{Response, Request}
+
+import io.shaka.http.{Request, Response}
 import io.shaka.http.Http._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
 
-//TODO: how is this different from the one in litte? or is it just not in little?
+//TODO: move this into little or little-client
 object LittleClient {
+  TrustAllSslCertificates
+
   def doRunRun(request: Request): Either[Exception, Response] = {
     try {
       //OR blocking
@@ -43,6 +46,8 @@ object LittleClient {
       case e: Exception => Left(e)
     }
   }
+
+  def unsafeRunAsString(request: Request) = unsafeRun(request).entityAsString
 
   private def unsafeRun(request: Request) = http(request)
 }
