@@ -15,13 +15,13 @@ import org.json4s.native.JsonMethods._
 //TODO: allow rendering as text/html
 
 case class TestRunReportListener(test: Test, outputDirectory: String) extends ScriptEventListener {
-  private var services: List[VersionedService] = Nil
+  private var services: Seq[VersionedService] = Nil
 
   override def beforeStarted(script: Script, testId: String) {}
   override def success(check: Check) { writeReport(check.script/*, Nil*/) }
-  override def failure(check: Check, reasons: List[String]) { writeReport(check.script/*, reasons*/) }
+  override def failure(check: Check, reasons: Seq[String]) { writeReport(check.script/*, reasons*/) }
   override def success(action: Action) { writeReport(action.script/*, Nil*/) }
-  override def failure(action: Action, reasons: List[String]) { writeReport(action.script/*, reasons*/) }
+  override def failure(action: Action, reasons: Seq[String]) { writeReport(action.script/*, reasons*/) }
   override def running(step: Step) {}
   override def started(when: LocalDateTime, script: Script) { writeReport(script/*, Nil*/) }
 
@@ -40,7 +40,7 @@ case class TestRunReportListener(test: Test, outputDirectory: String) extends Sc
     Filepath(outputDirectory + "/" + script.testRunId.get + ".json").write(pretty(render(jsonAst)))
   }
 
-  override def validated(testRunId: String, versionedServices: List[VersionedService]) {
+  override def validated(testRunId: String, versionedServices: Seq[VersionedService]) {
     services = versionedServices
   }
 }

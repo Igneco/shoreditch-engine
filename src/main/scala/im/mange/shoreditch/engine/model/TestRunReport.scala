@@ -7,7 +7,7 @@ import im.mange.shoreditch.engine.hipster.VersionedService
 import scala.Some
 
 object TestRunReport {
-  def create(test: Test, script: Script, services: List[VersionedService]) =
+  def create(test: Test, script: Script, services: Seq[VersionedService]) =
     TestRunReport(
       test.id, script.testRunId.get,
       script.startedAt.map(_.toDateTime(UTC)), script.completedAt.map(_.toDateTime(UTC)),
@@ -21,7 +21,7 @@ object TestRunReport {
         test.name,
         script.steps.map(st => StepSummary(st.mangledDescription, st.startedAt, st.completedAt))
       ),
-      if (script.successful) Nil else script.abortedBecause.fold(List("?????"))(r => r)
+      if (script.successful) Seq.empty else script.abortedBecause.fold(Seq("?????"))(r => r)
     )
 }
 
@@ -33,7 +33,7 @@ case class StepSummary(description: String, started: Option[DateTime], completed
 case class ScriptSummary(description: String, steps: Seq[StepSummary])
 
 case class TestRunReport(testId: String, testRunId: String, started: Option[DateTime], completed: Option[DateTime],
-                         services: List[ServiceSummary], script: ScriptSummary, failures: List[String]) {
+                         services: Seq[ServiceSummary], script: ScriptSummary, failures: Seq[String]) {
 
   def successful = failures.isEmpty
 }

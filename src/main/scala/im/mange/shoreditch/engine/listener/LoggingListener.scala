@@ -15,7 +15,7 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
     println("\n### Running: " + testId + " - " + script.name)
   }
 
-  def validated(testRunId: String, versionedServices: List[VersionedService]) {
+  def validated(testRunId: String, versionedServices: Seq[VersionedService]) {
     val prefix = if (!versionedServices.forall(_.offering.isDefined)) "Validation failed"  else "Validated with"
     println("### " + prefix + ": " + versionedServices.map(v => v.alias + " " + v.offering.fold("Not Available")(_.version) + " (" + v.env.fold("Not Available")(_.toString) + ")").mkString(", ") )
   }
@@ -33,12 +33,12 @@ case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener 
 
   def running(step: Step) {}
 
-  def failure(action: Action, failures: List[String]) {
+  def failure(action: Action, failures: Seq[String]) {
     println("### Failed: " + action + " with: " + failures.headOption.getOrElse("No reason supplied"))
   }
 
   def success(action: Action) { print(action, None) }
-  def failure(check: Check, reasons: List[String]) { print(check, reasons.headOption) }
+  def failure(check: Check, reasons: Seq[String]) { print(check, reasons.headOption) }
   def success(check: Check) { print(check, None) }
 
   private def print(step: Step, context: Option[String]) {

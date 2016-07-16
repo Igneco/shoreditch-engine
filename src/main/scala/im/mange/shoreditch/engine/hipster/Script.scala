@@ -55,7 +55,7 @@ case class Script(engineEventListener: ScriptEventListener, private val services
                   name: String, debug: Boolean)(implicit clock: Clock) {
   //TODO: provide methods for getting/checking vars/aborting, so we can hide these again
   var context = Map[String, String]()
-  private var aborted: Option[List[String]] = None
+  private var aborted: Option[Seq[String]] = None
   private var started: Option[LocalDateTime] = None
   private var stopped: Option[LocalDateTime] = None
   private var validatedServices: Option[List[VersionedService]] = None

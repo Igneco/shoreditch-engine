@@ -11,14 +11,14 @@ trait ScriptEventListener {
  // .. maybe some lightweight ScriptState thing
 
  def beforeStarted(script: Script, testId: String): Unit
- def validated(testRunId: String, versionedServices: List[VersionedService]): Unit
+ def validated(testRunId: String, versionedServices: Seq[VersionedService]): Unit
  def started(when: LocalDateTime, script: Script): Unit
  def stopped(when: LocalDateTime, script: Script): Unit
  def running(step: Step): Unit
 
  //TODO: do we need all this versions, can it not just be based on Step?
- def failure(action: Action, reasons: List[String]): Unit
+ def failure(action: Action, reasons: Seq[String]): Unit
  def success(action: Action): Unit
- def failure(check: Check, reasons: List[String]): Unit
+ def failure(check: Check, reasons: Seq[String]): Unit
  def success(check: Check): Unit
 }
