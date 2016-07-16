@@ -1,9 +1,10 @@
 package im.mange.shoreditch.engine.hipster
 
+import im.mange.little.clock.Clock
 import org.joda.time.{DateTime, LocalDateTime}
-import im.mange.shoreditch.{CheckResponse, ActionResponse}
+import im.mange.shoreditch.{ActionResponse, CheckResponse}
 import im.mange.shoreditch.engine.hipster
-import im.mange.shoreditch.engine.{Clock, systems, ScriptEventListener}
+import im.mange.shoreditch.engine.{ScriptEventListener, systems}
 import im.mange.shoreditch.engine.services.{Service, Services}
 import im.mange.shoreditch.engine.systems.System
 import im.mange.shoreditch.engine.registry.TestRunIdCounter

@@ -1,7 +1,7 @@
 package im.mange.shoreditch.engine.hipster
 
+import im.mange.little.clock.Clock
 import org.joda.time.DateTime
-import im.mange.shoreditch.engine.Clock
 
 trait Step {
   //TODO: should be S-prefixed

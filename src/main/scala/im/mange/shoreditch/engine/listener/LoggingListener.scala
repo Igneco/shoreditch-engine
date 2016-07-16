@@ -2,12 +2,12 @@ package im.mange.shoreditch.engine.listener
 
 import org.joda.time.{Interval, LocalDateTime}
 import im.mange.shoreditch.engine.hipster._
-import im.mange.shoreditch.engine.{Clock, ScriptEventListener}
+import im.mange.shoreditch.engine.ScriptEventListener
 import im.mange.shoreditch.engine.hipster.VersionedService
 import im.mange.shoreditch.engine.hipster.Check
 import im.mange.shoreditch.engine.hipster.Action
 import im.mange.little.date.DateFormatForHumans
-import im.mange.little.clock.RealClock
+import im.mange.little.clock.{Clock, RealClock}
 
 case class LoggingListener()(implicit clock: Clock) extends ScriptEventListener {
   def beforeStarted(script: Script, testId: String) {
