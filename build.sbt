@@ -17,7 +17,8 @@ resolvers     += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.5",
-  "org.json4s"     %% "json4s-native" % "[3.2.11,3.99.99]" % "provided"
+
+  "org.json4s"     %% "json4s-native" % "[3.2.11,3.99.99]"// % "provided"
     exclude("org.scala-lang", "scala-compiler")
     exclude("org.scala-lang", "scalap")
     exclude("joda-time", "joda-time")
