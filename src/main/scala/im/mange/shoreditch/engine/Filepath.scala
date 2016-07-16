@@ -2,6 +2,7 @@ package im.mange.shoreditch.engine
 
 import java.io.File
 
+//TODO: use the little one instead
 case class Filepath(filepath: String) {
   private val file = new File(filepath)
 
