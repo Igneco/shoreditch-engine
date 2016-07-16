@@ -14,6 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
 
+//TODO: how is this different from the one in litte? or is it just not in little?
 object LittleClient {
   def doRunRun(request: Request): Either[Exception, Response] = {
     try {
