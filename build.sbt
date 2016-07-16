@@ -17,8 +17,16 @@ resolvers     += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.5",
-  //TODO: should be using json4s ...
-  "net.liftweb" %% "lift-json" % "2.6",
+  "org.json4s"     %% "json4s-native" % "[3.2.11,3.99.99]" % "provided"
+    exclude("org.scala-lang", "scala-compiler")
+    exclude("org.scala-lang", "scalap")
+    exclude("joda-time", "joda-time")
+  ,
+
+  "org.json4s"     %% "json4s-ext"    % "[3.2.11,3.99.99]" % "provided"
+    exclude("joda-time", "joda-time")
+  ,
+
   "com.github.nscala-time" %% "nscala-time" % "1.6.0",
   "io.shaka" %% "naive-http" % "51",
   "im.mange" %% "shoreditch-api" % "[0.2.70,0.3.0]" % "provided",

@@ -3,13 +3,14 @@ package im.mange.shoreditch.engine.listener
 import im.mange.shoreditch.engine.{Filepath, Json, ScriptEventListener}
 import im.mange.shoreditch.engine.hipster._
 import org.joda.time.{DateTime, LocalDateTime}
-import net.liftweb.json._
 import org.joda.time.DateTimeZone._
 import im.mange.shoreditch.engine.hipster.VersionedService
 import im.mange.shoreditch.engine.hipster.Action
 import im.mange.shoreditch.engine.hipster.Check
+
 import scala.reflect.io.Directory
-import im.mange.shoreditch.engine.model.{TestRunReport, Test}
+import im.mange.shoreditch.engine.model.{Test, TestRunReport}
+import org.json4s.native.JsonMethods._
 
 //TODO: allow rendering as text/html
 

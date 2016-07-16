@@ -1,16 +1,19 @@
 package im.mange.shoreditch.engine
 
-import net.liftweb.json._
-import net.liftweb.json.Serialization._
-import net.liftweb.json.{JsonParser, NoTypeHints, Serialization}
+import im.mange.little.json.{LittleJodaSerialisers, LittleSerialisers}
 import im.mange.shoreditch.api._
 import im.mange.shoreditch._
 import im.mange.shoreditch.engine.model.TestRunReport
+import org.json4s.NoTypeHints
+import org.json4s.native.{JsonParser, Serialization}
+import org.json4s._
+import org.json4s.native.Serialization._
+import org.json4s.native.JsonMethods._
 
 //TODO: probably better to have: CheckResponseJson.x etc
 object Json {
-  private val shoreditchFormats = Serialization.formats(NoTypeHints) + new DateTimeSerializer
-  
+  private val shoreditchFormats = Serialization.formats(NoTypeHints) ++ LittleSerialisers.all ++ LittleJodaSerialisers.all
+
   //TODO: we don't technically need this in the public api
   def deserialiseActionResponse(json: String) = {
     implicit val formats = shoreditchFormats
@@ -37,6 +40,6 @@ object Json {
   //TODO: we don't technically need this in the public api
   def serialise(r: TestRunReport) = {
     implicit val formats = shoreditchFormats
-    JsonParser.parse(write(r))
+    parse(write(r))
   }
 }
