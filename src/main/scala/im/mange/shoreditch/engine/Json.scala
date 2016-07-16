@@ -10,23 +10,19 @@ import org.json4s._
 import org.json4s.native.Serialization._
 import org.json4s.native.JsonMethods._
 
-//TODO: probably better to have: CheckResponseJson.x etc
 object Json {
   private val shoreditchFormats = Serialization.formats(NoTypeHints) ++ LittleSerialisers.all ++ LittleJodaSerialisers.all
 
-  //TODO: we don't technically need this in the public api
   def deserialiseActionResponse(json: String) = {
     implicit val formats = shoreditchFormats
     parse(json).extract[ActionResponse]
   }
 
-  //TODO: we don't technically need this in the public api
   def deserialiseCheckResponse(json: String) = {
     implicit val formats = shoreditchFormats
     parse(json).extract[CheckResponse]
   }
 
-  //TODO: we don't technically need this in the public api
   def deserialiseMetaDataResponse(json: String) = {
     implicit val formats = shoreditchFormats
     parse(json).extract[MetaDataResponse]
@@ -37,7 +33,6 @@ object Json {
     pretty(render(JsonParser.parse(write(r))))
   }
 
-  //TODO: we don't technically need this in the public api
   def serialise(r: TestRunReport) = {
     implicit val formats = shoreditchFormats
     parse(write(r))
